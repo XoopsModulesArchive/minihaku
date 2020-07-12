@@ -1,0 +1,75 @@
+[mlimg]
+[xlang:en]
+== Mini-Hakusen == 
+
+A simple subset of hakusen module.
+
+Usage:
+
+- Install as a module
+- append a line into mainfile.php (the red line)
+[code]
+[color=ff0000]	include XOOPS_ROOT_PATH.'/modules/minihaku/include/mainfilehook.php' ;[/color]
+}
+?>
+[/code]
+- edit templates of minihaku_register.html or minihaku_edituser.html via altsys or tplsadmin
+- rename include/config.dist.php into include/config.php if necessary
+- edit include/config.php if necessary
+
+If you want to display extra fields into userinfo, describe it into system_userinfo.html
+eg)
+[code]
+<{$user_uid|minihaku_userinfo:"sex":"uid"}>
+[/code]
+
+
+[/xlang:en]
+[xlang:ja]
+== ミニ白扇 ==
+
+新規登録とかアカウント編集をテンプレートとしてカスタマイズしたいけど、白扇は配布中止しているし、どうしようかなあ、と仕方なく作ったサブセット版。
+
+使い方:
+
+- モジュールとしてインストール
+- mainfile.php の後ろの方に１行だけ追加（赤い行）
+[code]
+[color=ff0000]	include XOOPS_ROOT_PATH.'/modules/minihaku/include/mainfilehook.php' ;[/color]
+}
+?>
+[/code]
+- include/config.dist.php を config.php にリネームします
+- config.php を適宜編集します。
+
+あとは、必要に応じて、テンプレートをaltsysもしくはtplsadminで編集してください。
+edituserとregisterについては、minihaku内にテンプレートがありますが、userinfoはsystemのをそのまま利用する、というあたりがつまづきやすいポイントでしょうか。
+
+system_userinfo.html において、追加したフィールドの値を表示したい場合は、Smartyのフィルタプラグイン minihaku_userinfo を利用します。（実のところ、userinfo.htmlには、管理者以外にはuidが渡ってこないことが判明したため、$_GET["uid"]から拾っています。そういう意味では、フィルタプラグインとしての利用ではないのですが…）
+例) 性別を表示する
+[code]
+<{$user_uid|minihaku_userinfo:"sex":"uid"}>
+[/code]
+
+usersテーブルにフィールドを増やすこと自体は、DBに対して、ALTER TABLEを直接発行してください。判らなければ、phpMyAdminを利用するのも手でしょう。
+
+いわゆるコントローラっぽいものは一切用意していません。つまり、判る人にだけ判ればいいや、てな作りになってますが、基本的に、テンプレートとincldue/config.phpだけをいじれば良いはずです。特定のキーが入力された時だけ、あるグループに所属させる、なんてことも簡単にできるようにはしてあります。
+
+
+1.09 2007-12-11
+- ユーザ登録のメール送信部で、全リクエストをメールテンプレートにアサインするようにした {REQUEST_name} など
+- ユーザ登録成功時の処理に、フックポイントを追加した
+
+1.08 2007-01-10
+- config.php 内で $stop_error_extras 配列を利用できるようにした (thx jidaikobo)
+- 一般設定をアサインするようにした（ユーザ名の最大・最小文字数などを表示するため）
+- 一般設定の利用許諾文表示設定を反映するようにした (thx eyesonly)
+
+1.07 2006-09-24
+- 環境によってインストールできないバグを修正 (thx kojima)
+
+1.06 2006-08-26
+- userinfo.html に user_uid がアサインされていないのでプラグインを変更 (thx nico)
+
+[/xlang:ja]
+

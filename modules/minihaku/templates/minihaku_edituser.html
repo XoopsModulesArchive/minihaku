@@ -1,0 +1,162 @@
+<ul>
+	<{foreach from=$stop_reasons item="reason"}>
+		<li><strong style='color:#ff0000; font-weight:bold;'><{$reason}></strong></li>
+	<{/foreach}>
+</ul>
+
+<form name="userinfo" id="userinfo" action="" method="post" onsubmit="return userinfo_validation();">
+
+<table width="100%" class="outer" cellspacing="1">
+	<tr>
+		<th colspan="2"><{$smarty.const._US_EDITPROFILE}></th>
+	</tr>
+	<tr valign="top" align="left">
+		<td class="head"><{$smarty.const._US_NICKNAME}></td>
+		<td class="even"><{$uname|escape}></td>
+	</tr>
+	<tr valign="top" align="left">
+		<td class="head"><{$smarty.const._US_REALNAME}></td>
+		<td class="even"><input type="text" name="name" id="name" size="25" maxlength="60" value="<{$name|escape}>" /></td>
+	</tr>
+	<tr valign="top" align="left">
+		<td class="head"><{$smarty.const._US_EMAIL}></td>
+		<td class="even">
+			<{if $allow_chgmail == 1}>
+				<input type="text" name="email" id="email" size="60" value="<{$email|escape}>" />
+			<{else}>
+				<{$email|escape}>
+			<{/if}>
+			<br />
+			<input type="checkbox" name="user_viewemail" id="user_viewemail" value="1" <{if $user_viewemail}>checked="checked"<{/if}> />
+			<label for="user_viewemail"><{$smarty.const._US_ALLOWVIEWEMAIL}></label>
+		</td>
+	</tr>
+	<tr valign="top" align="left">
+		<td class="head"><{$smarty.const._US_WEBSITE}></td>
+		<td class="even"><input type="text" name="url" id="url" size="25" maxlength="255" value="<{$url|escape}>" /></td>
+	</tr>
+	<tr valign="top" align="left"><td class="head"><{$smarty.const._US_TIMEZONE}></td>
+		<td class="even">
+			<select  size="1" name="timezone_offset" id="timezone_offset">
+				<{html_options options=$timezone_options selected=$timezone_offset}>
+			</select>
+		</td>
+	</tr>
+	<tr valign="top" align="left">
+		<td class="head"><{$smarty.const._US_ICQ}></td>
+		<td class="even"><input type="text" name="user_icq" id="user_icq" size="15" maxlength="15" value="<{$user_icq|escape}>" /></td>
+	</tr>
+	<tr valign="top" align="left">
+		<td class="head"><{$smarty.const._US_AIM}></td>
+		<td class="even"><input type="text" name="user_aim" id="user_aim" size="18" maxlength="18" value="<{$user_aim|escape}>" /></td>
+	</tr>
+	<tr valign="top" align="left">
+		<td class="head"><{$smarty.const._US_YIM}></td>
+		<td class="even"><input type="text" name="user_yim" id="user_yim" size="25" maxlength="25" value="<{$user_yim|escape}>" /></td>
+	</tr>
+	<tr valign="top" align="left">
+		<td class="head"><{$smarty.const._US_MSNM}></td>
+		<td class="even"><input type="text" name="user_msnm" id="user_msnm" size="30" maxlength="30" value="<{$user_msnm|escape}>" /></td>
+	</tr>
+	<tr valign="top" align="left">
+		<td class="head"><{$smarty.const._US_LOCATION}></td>
+		<td class="even"><input type="text" name="user_from" id="user_from" size="30" maxlength="100" value="<{$user_from|escape}>" /></td>
+	</tr>
+	<tr valign="top" align="left">
+		<td class="head"><{$smarty.const._US_OCCUPATION}></td>
+		<td class="even"><input type="text" name="user_occ" id="user_occ" size="30" maxlength="100" value="<{$user_occ|escape}>" /></td>
+	</tr>
+	<tr valign="top" align="left">
+		<td class="head"><{$smarty.const._US_INTEREST}></td>
+		<td class="even"><input type="text" name="user_intrest" id="user_intrest" size="30" maxlength="150" value="<{$user_intrest|escape}>" /></td>
+	</tr>
+	<tr valign="top" align="left">
+		<td class="head"><{$smarty.const._US_SIGNATURE}></td>
+		<td class="even"><textarea type="text" name="user_sig" id="user_sig" cols="50" rows="5"><{$user_sig|escape}></textarea></td>
+	</tr>
+	<tr valign="top" align="left"><td class="head"><{$smarty.const._US_CDISPLAYMODE}></td>
+		<td class="even">
+			<select  size="1" name="umode" id="umode">
+				<{html_options options=$umode_options selected=$umode}>
+			</select>
+		</td>
+	</tr>
+	<tr valign="top" align="left"><td class="head"><{$smarty.const._US_CSORTORDER}></td>
+		<td class="even">
+			<select  size="1" name="uorder" id="uorder">
+				<{html_options options=$uorder_options selected=$uorder}>
+			</select>
+		</td>
+	</tr>
+	<tr valign="top" align="left"><td class="head"><{$smarty.const._NOT_NOTIFYMETHOD}></td>
+		<td class="even">
+			<select  size="1" name="notify_method" id="notify_method">
+				<{html_options options=$notify_method_options selected=$notify_method}>
+			</select>
+		</td>
+	</tr>
+	<tr valign="top" align="left"><td class="head"><{$smarty.const._NOT_NOTIFYMODE}></td>
+		<td class="even">
+			<select  size="1" name="notify_mode" id="notify_mode">
+				<{html_options options=$notify_mode_options selected=$notify_mode}>
+			</select>
+		</td>
+	</tr>
+	<tr valign="top" align="left">
+		<td class="head"><{$smarty.const._US_EXTRAINFO}></td>
+		<td class="even"><textarea type="text" name="bio" id="bio" cols="50" rows="5"><{$bio|escape}></textarea></td>
+	</tr>
+	<tr>
+		<td class="head"><{$smarty.const._US_PASSWORD}></td>
+		<td class="even"><input type="password" name="pass" id="pass" size="10" maxlength="32" value="<{$pass|escape}>" /></td></tr>
+	<tr valign="top" align="left">
+		<td class="head"><{$smarty.const._US_VERIFYPASS}></td>
+		<td class="even"><input type="password" name="vpass" id="vpass" size="10" maxlength="32" value="<{$vpass|escape}>" /></td>
+	</tr>
+	<tr valign="top" align="left">
+		<td class="head"><{$smarty.const._US_USECOOKIE}></td>
+		<td class="even">
+			<{html_radios name="usercookie" options=$yn_options selected=$usercookie}>
+		</td>
+	</tr>
+	<tr valign="top" align="left">
+		<td class="head"><{$smarty.const._US_MAILOK}></td>
+		<td class="even">
+			<{html_radios name="user_mailok" options=$yn_options selected=$user_mailok}>
+		</td>
+	</tr>
+
+	<{* sample
+	<tr valign="top" align="left">
+		<td class="head">sex</td>
+		<td class="even">
+			<{html_radios name="sex" options=$sex_options selected=$sex}>
+		</td>
+	</tr>
+	<tr valign="top" align="left">
+		<td class="head">birth</td>
+		<td class="even">
+			<{html_select_date field_order="YMD" month_format="%m" day_format="%02d" start_year="-100" end_year="-1" time=$birth }>
+		</td>
+	</tr>
+	*}>
+
+	<tr valign="top" align="left">
+		<td class="head"></td>
+		<td class="even"><input type="submit" class="formButton" name="do_register"  id="do_register" value="<{$smarty.const._US_SUBMIT}>" /></td>
+	</tr>
+</table>
+
+<input type="hidden" name="op" id="op" value="saveuser" />
+
+</form>
+
+<!-- Start Form Vaidation JavaScript //-->
+<script type='text/javascript'>
+<!--//
+function userinfo_validation() {
+	myform = window.document.userinfo;
+	return true;
+}
+//--></script>
+<!-- End Form Vaidation JavaScript //-->

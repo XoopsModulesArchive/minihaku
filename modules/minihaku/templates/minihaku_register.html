@@ -1,0 +1,106 @@
+<ul>
+	<{foreach from=$stop_reasons item="reason"}>
+		<li><strong style='color:#ff0000; font-weight:bold;'><{$reason}></strong></li>
+	<{/foreach}>
+</ul>
+
+<form name="userinfo" id="userinfo" action="" method="post" onsubmit="return userinfo_validation();">
+
+<table width="100%" class="outer" cellspacing="1">
+	<tr>
+		<th colspan="2"><{$smarty.const._US_USERREG}></th>
+	</tr>
+	<tr valign="top" align="left">
+		<td class="head">
+			<{$smarty.const._US_NICKNAME}>
+			<{* (<{$xoops_config_user.minuname}>-<{$xoops_config_user.maxuname}> characters) *}>
+		</td>
+		<td class="even"><input type="text" name="uname" id="uname" size="<{$xoops_config_user.maxuname}>" maxlength="<{$xoops_config_user.maxuname}>" value="<{$uname|escape}>" /></td>
+	</tr>
+	<tr valign="top" align="left">
+		<td class="head"><{$smarty.const._US_EMAIL}></td>
+		<td class="even"><input type="text" name="email" id="email" size="25" maxlength="60" value="<{$email|escape}>" /><br /><input type="checkbox" name="user_viewemail" value="1" /><{$smarty.const._US_ALLOWVIEWEMAIL}></td>
+	</tr>
+	<tr valign="top" align="left">
+		<td class="head"><{$smarty.const._US_WEBSITE}></td>
+		<td class="even"><input type="text" name="url" id="url" size="25" maxlength="255" value="<{$url|escape}>" /></td>
+	</tr>
+	<tr valign="top" align="left"><td class="head"><{$smarty.const._US_TIMEZONE}></td>
+		<td class="even">
+			<select  size="1" name="timezone_offset" id="timezone_offset">
+				<{html_options options=$timezone_options selected=$timezone_offset}>
+			</select>
+		</td>
+	</tr>
+	<tr valign="top" align="left">
+		<td class="head">
+			<{$smarty.const._US_PASSWORD}>
+			<{* (<{$xoops_config_user.minpass}> and more characters) *}>
+		</td>
+		<td class="even"><input type="password" name="pass" id="pass" size="10" maxlength="32" value="<{$pass|escape}>" /></td>
+	</tr>
+	<tr valign="top" align="left">
+		<td class="head"><{$smarty.const._US_VERIFYPASS}></td>
+		<td class="even"><input type="password" name="vpass" id="vpass" size="10" maxlength="32" value="<{$vpass|escape}>" /></td>
+	</tr>
+	<tr valign="top" align="left">
+		<td class="head"><{$smarty.const._US_MAILOK}></td>
+		<td class="even">
+			<input type="radio" name="user_mailok" value="1" /><{$smarty.const._YES}>
+			<input type="radio" name="user_mailok" value="0" checked="checked" /><{$smarty.const._NO}>
+		</td>
+	</tr>
+
+	<{if $xoops_config_user.reg_dispdsclmr}>
+	<tr valign="top" align="left">
+		<td class="head"><{$smarty.const._US_DISCLAIMER}></td>
+		<td class="even">
+			<textarea name="disclaimer" id="disclaimer" rows="8" cols="50" readonly="readonly"><{$xoops_config_user.reg_disclaimer}></textarea>
+			<br />
+			<input type="checkbox" name="agree_disc" id="agree_disc" value="1" /><{$smarty.const._US_IAGREE}>
+		</td>
+	</tr>
+	<{/if}>
+
+	<{* sample of extra fields of sex and birth
+	<tr valign="top" align="left">
+		<td class="head">sex</td>
+		<td class="even">
+			<{html_radios name="sex" options=$sex_options selected=$sex}>
+		</td>
+	</tr>
+	<tr valign="top" align="left">
+		<td class="head">birth</td>
+		<td class="even">
+			<{html_select_date field_order="YMD" month_format="%m" day_format="%02d" start_year="-100" end_year="-1" time=$birth }>
+		</td>
+	</tr>
+	*}>
+
+	<{* sample of regkey for auto belonging system into a specific group
+	<tr valign="top" align="left">
+		<td class="head">regkey (if you have)</td>
+		<td class="even">
+			<input type="text" name="regkey" id="regkey" size="25" maxlength="25" value="<{$regkey|escape}>" />
+		</td>
+	</tr>
+	*}>
+
+	<tr valign="top" align="left">
+		<td class="head"></td>
+		<td class="even"><input type="submit" class="formButton" name="do_register"  id="do_register" value="<{$smarty.const._US_SUBMIT}>" /></td>
+	</tr>
+</table>
+
+</form>
+
+<!-- Start Form Vaidation JavaScript //-->
+<script type='text/javascript'>
+<!--//
+function userinfo_validation() {
+	myform = window.document.userinfo;
+	if ( myform.disclaimer && ! myform.agree_disc.value ) { window.alert("<{$smarty.const._US_UNEEDAGREE}>"); myform.agree_disc.focus(); return false; }
+	return true;
+}
+//--></script>
+<!-- End Form Vaidation JavaScript //-->
